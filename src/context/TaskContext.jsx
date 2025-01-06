@@ -15,10 +15,17 @@ export function TaskContextProvider({ children }) {
     setTasks([...dataUpdated, newTask]);
   };
   const deleteTask = (item) => {
-    dataUpdated.splice(item.id, 1);
-    setTasks(dataUpdated);
-  };
+    //No se puede usar splice, ya que splice elimina el task que segun el task.id, y luego reordena el array de objetos task resultando que el indice del task dentro del array sea diferente a la propiedad id del task.
+    //dataUpdated.splice(item.id, 1);
 
+    const afterDeleteTask = dataUpdated.filter((task) => task.id !== item.id);
+    setTasks(afterDeleteTask);
+    console.log(
+      `El valor del Id dentro de DeleteTask en Context es: ${item.id}`
+    );
+  };
+  tasks.forEach((item) => console.log(item));
+  //console.log(`La Cantidad de Elementos del array Task es: ${tasks.length}`);
   return (
     <TaskContext.Provider
       value={{
